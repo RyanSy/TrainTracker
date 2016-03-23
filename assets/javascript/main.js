@@ -1,3 +1,18 @@
+//Add current date and time
+var datetime = null,
+        date = null;
+
+var update = function () {
+    date = moment(new Date())
+    datetime.html(date.format('dddd, MMMM Do YYYY, h:mm:ss a'));
+};
+
+$(document).ready(function(){
+    datetime = $('#timeNow')
+    update();
+    setInterval(update, 1000);
+});
+
 // Create database in Firebase
 var trainData = new Firebase("https://ryanbsy.firebaseio.com/");
 
@@ -17,7 +32,7 @@ $("#addTrainScheduleButton").on("click", function(){
         frequency: frequency
     }
 
-    // Uploads employee data to the database
+    // Uploads train schedule data to the database
     trainData.push(newTrainScheduleData);
 
     // Logs everything to console
@@ -55,7 +70,7 @@ trainData.on("child_added", function(childSnapshot, prevChildKey){
     console.log(trainName);
     console.log(destination);
     console.log(firstTrainTime);
-    console.log(frequency);
+    console.log(frequency); 
 
     // Add each train's data into the table 
     $("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + firstTrainTime + "</td><td>" + "Every " + frequency +" Minutes" + "</td></tr>");
